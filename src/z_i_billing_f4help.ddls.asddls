@@ -1,0 +1,37 @@
+@AbapCatalog.sqlViewName: 'ZIBILLING_F4HELP'
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Billing Document F4 Help'
+@Metadata.ignorePropagatedAnnotations: true
+
+@ObjectModel.dataCategory: #VALUE_HELP
+@ObjectModel.usageType.dataClass: #CUSTOMIZING
+@ObjectModel.usageType.serviceQuality: #A
+@ObjectModel.usageType.sizeCategory: #S
+@ObjectModel.supportedCapabilities: [#CDS_MODELING_ASSOCIATION_TARGET, #CDS_MODELING_DATA_SOURCE, #SQL_DATA_SOURCE, #VALUE_HELP_PROVIDER, #SEARCHABLE_ENTITY]
+//@ObjectModel.usageType:{
+//    serviceQuality: #X,
+//    sizeCategory: #S,
+//    dataClass: #MIXED
+//}
+@ObjectModel.resultSet.sizeCategory: #XS
+define view Z_I_BILLING_F4HELP as select from I_BillingDocumentBasic as Billingheader
+//association to I_OperationalAcctgDocItem as dposting on dposting.BillingDocument = Billingheader.BillingDocument
+{
+  
+  //    key Billingheader.BillingDocument as BillingDocument,
+    key Billingheader.BillingDocumentType as BillingDocumentType
+//    key dposting.AccountingDocumentType
+//        Billingheader.Division
+    
+    
+}
+
+where Billingheader.AccountingPostingStatus = 'C' 
+and   Billingheader.BillingDocumentIsCancelled <> 'X'
+and   Billingheader.BillingDocumentType <> 'S1'
+and   Billingheader.BillingDocumentType <> 'S2' 
+group by Billingheader.BillingDocumentType
+//dposting.AccountingDocumentType //, Billingheader.Division
+
+

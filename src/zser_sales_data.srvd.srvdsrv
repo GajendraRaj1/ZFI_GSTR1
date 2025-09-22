@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition for Sales'
+define service ZSER_SALES_DATA {
+  expose ZC_SEND_DATA_TO_MI;
+}
